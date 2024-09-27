@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Ultra Game</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        #tratata{
+            height: calc(100vh - 4px);
+            width: calc(100vw - 4px);
+            margin: 0;
+            background-image: url('ррр.jpg');
+            background-size: cover;
+            border: 2px solid black;
+        }
+        .hidden{
+            display: none;
+        }
+        .visible{
+            display: block;
+        }
+        .sprite{
+            margin:5px ;
+            padding: 2px;
+            background-image:url('1.jpg');
+            height:120px ;
+            width: 120px ;
+            float: left;
+            border: 1px solid black;
+            background-size: cover;
+        }
+        .rerre {
+            background-image: url('2.jpg');
+            margin:5px ;
+            padding: 2px;
+            height:120px ;
+            width: 120px ;
+            float: left;
+            border: 1px solid black;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="tratata">
+        <div class="sprite">1</div>
+        <div class="sprite">2</div>
+        <div class="sprite">3</div>
+        <div class="sprite">4</div>
+        <div class="sprite">5</div>
+        <div class="sprite">6</div>
+        <input style="border: 1px solid black; float:right; height: 40px;width: 65px;" type="button" value="Start" onclick="start() ">
+        <p id="rarr" style="font-size: 30px; font-family: Arial; text-align: left;border: 2px solid black;padding: 3 px; margin: 3px; width: 90px; background-color: white; "> очки: </p>
+
+    </div>
+    <script>
+        function start(){
+            points = 0
+            gameloop();
+        };
+        var loops = 0
+        var visibleSprite = false
+        var points = 0
+        function gameloop() {
+            loops++;
+            visibleSprite = !visibleSprite
+            cards();
+            badSprite();
+            if (loops <12 ){
+                setTimeout(gameloop, visibleSprite ? 900 : 2000);
+            }else {
+                document.getElementById('rarr').innerHTML += points;
+                alert('Finish ✖︎ ` ' );
+                return 
+            };
+            
+        };
+        function cards(){
+            var board = document.getElementById('tratata')
+            var classed = ''
+            if (visibleSprite){
+                classed = 'sprite visible'
+            }else{
+                classed = 'sprite  hidden'
+            }
+            for (var i = 0; i < 6; i++)
+                board.children[i].className = classed;
+        }
+        function badSprite (){
+            var board = document.getElementById('tratata')
+            for (var i = 0; i < 6; i++) {
+                board.children[i].innerHTML = '';
+                board.children[i].onclick = function(){
+                    points = points - 2
+                }
+            }
+            var randomm = Math.floor(Math.random()*5);
+            board.children[randomm].innerHTML='';
+            board.children[randomm].className += ' rerre'
+            board.children[randomm].onclick = function(){
+                    points++
+                };
+        }    
+        
+        
+    </script>
+</body>
+</html>
